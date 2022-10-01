@@ -1,9 +1,6 @@
-import os
-# import psutil
-import sys
 import re
 from collections import Counter
-from unittest.util import unorderable_list_difference
+
 
 class Movies:
     """

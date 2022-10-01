@@ -1,3 +1,43 @@
+import datetime as dt
+from collections import Counter, defaultdict
+from module.movies import Movies
+from functools import reduce
+
+
+class Statistics:
+    @staticmethod
+    def average(values: list):
+        return sum(values) / len(values)
+
+    @staticmethod
+    def median(values: list):
+        if len(values) == 0:
+            raise ValueError('List is empty.')
+
+        if len(values) == 1:
+            return float(values[0])
+
+        values = sorted(values)
+        mid = int(len(values) / 2)
+
+        if len(values) % 2:
+            return float(values[mid])
+
+        return (values[mid - 1] + values[mid]) / 2.0
+
+    @classmethod
+    def variance(cls, values: list):
+        mean = cls.average(values)
+
+        def reduce_func(prev, curr):
+            diff = curr - mean
+            return prev + diff * diff
+
+        squares_sum = reduce(reduce_func, values)
+
+        return squares_sum / len(values)
+
+
 class Ratings:
 	# """
 	# Analyzing data from ratings.csv

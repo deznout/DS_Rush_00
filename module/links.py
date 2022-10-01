@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from collections import Counter, OrderedDict
 from bs4 import BeautifulSoup
 import requests
@@ -15,7 +17,6 @@ class Links:
         self.file = path_to_the_file
 
         self.movie_imdb_ID = {}
-        self.data = []
         try:
             with open(self.file, 'r') as fl:
                 for i, line in enumerate(fl):
@@ -23,7 +24,7 @@ class Links:
                         continue
                     mov = line.split(',')[0]
                     self.movie_imdb_ID[mov] = line.split(',')[1]
-            range_nm = list(map(lambda x: str(x), range(1, 6)))
+            range_nm = list(map(str, range(5, 21)))
             self.data = self.get_imdb(range_nm,
                                       ['Director', 'Also known as', 'Budget', 'Gross worldwide', 'Runtime'])
         except OSError as os_err:
@@ -51,14 +52,24 @@ The method returns a list of lists [movieId, field1, field2, field3, ...] for th
             response = requests.get(url, headers={'User-Agent': 'PYTHON'})
             soup = BeautifulSoup(response.text, 'lxml')
             tags = soup.find_all('li', role='presentation', class_='ipc-metadata-list__item')
-            for field in list_of_fields:
-                for tag in tags:
+            # for field in list_of_fields:
+            #     for tag in tags:
+            #         if tag.text.find(field) != -1:
+            #             imdb.append(tag.text.replace(field, ''))
+            #             break
+
+            tmp_field_list = list_of_fields.copy()
+            for j, tag in enumerate(tags):
+                for i, field in enumerate(tmp_field_list):
                     if tag.text.find(field) != -1:
                         imdb.append(tag.text.replace(field, ''))
+                        tmp_field_list.pop(i)
+                        # tags.pop(j)
                         break
+
             imdb_info.append(imdb)
 
-            imdb_info = sorted(imdb_info, key=lambda x: int(x[0]), reverse=True)
+        imdb_info = sorted(imdb_info, key=lambda x: int(x[0]), reverse=True)
         return imdb_info
 
     def top_directors(self, n):
@@ -104,6 +115,12 @@ The method returns a list of lists [movieId, field1, field2, field3, ...] for th
         the values are the difference between cumulative worldwide gross and budget.
      Sort it by the difference descendingly.
         """
+
+        '''
+        some of films doesn't have budget so that add some checking in summa_to_int func
+        and correct output        
+        '''
+
         profits = {}
         for mov in self.data:
             profits[mov[2]] = self.summa_to_int(mov[4]) - self.summa_to_int(mov[3])
@@ -172,7 +189,7 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('PyCharm')
-    lll = Links()
-    res = lll.top_directors(3)
+    lll = Links('../data/links.csv')
+    res = lll.most_expensive(10)
     for p, m in res.items():
         print(p, m)
