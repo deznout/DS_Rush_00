@@ -6,12 +6,17 @@ class Movies:
     """
     Analyzing data from movies.csv
     """
-    def __init__(self, path_to_the_file):
+
+    def __init__(self, path_to_the_file='../data/movies.csv'):
         """
         Put here any fields that you think you will need.
         """
         self.filename = path_to_the_file
         self.data = self.read_file()
+        self.titles = {}
+        for data in self.read_file():
+            self.titles[data[0]] = data[1]
+
 
     def read_file(self):
         with open(self.filename, 'r') as file:
@@ -24,21 +29,11 @@ class Movies:
         You need to extract years from the titles. Sort it by counts descendingly.
         """
         list_years = []
-        dict_years ={}
         for row in self.data:
-            step1 = re.findall(r"[(]\d{4}[)]", row)
+            step1 = re.findall(r"[(]\d{4}[)]", row[1])
             step2 = str(step1)[3:7]
             list_years.append(step2)
         release_years = dict(Counter(list_years).most_common())
-
-        # unic_years = sorted(list(set(list_years)))
-        # print(unic_years)
-        # del(unic_years)[0]
-        # for i in unic_years:
-        #     dict_years[i] = list_years.count(i)
-        # sorted_tuples = sorted(dict_years.items(), key=lambda item: item[1], reverse=True)
-        # release_years = {key: value for key, value in sorted_tuples}
-        print(release_years)
 
         return release_years
 
@@ -74,9 +69,7 @@ class Movies:
         for elem in all_lines:
             result[elem[1]] = len(elem[2].split('|'))
 
-        return dict(sorted(result.items(), \
-                        key=lambda x: x[1], reverse=True)[:n])
-
+        return dict(sorted(result.items(), key=lambda x: x[1], reverse=True)[:n])
 
     def get_title(self, movie_id):
         return self.titles.get(movie_id)
@@ -93,13 +86,3 @@ class Movies:
                     splitted = tmp_line.split(',')
                 all_lines.append(splitted)
         return all_lines
-
-# def main():
-#     file = "data/movies.csv"
-#     movie = Movies(file)
-#     movie.dist_by_release()
-
-
-
-# if __name__ == "__main__":
-#     main()

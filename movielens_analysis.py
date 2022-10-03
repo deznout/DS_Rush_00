@@ -3,7 +3,6 @@ from module.links import Links
 from module.movies import Movies
 from module.ratings import Ratings
 
-
 class TestMovies:
     @classmethod
     def setup_class(cls):
@@ -15,9 +14,8 @@ class TestMovies:
     def test_dist_by_genres(self):
         self.movies.dist_by_release()
 
-    def test_most_genres(self, n):
+    def test_most_genres(self, n=10):
         self.movies.most_genres(n)
-
 
 class TestRatings:
     @classmethod
@@ -33,13 +31,13 @@ class TestRatings:
     def test_movies_dist_by_rating(self):
         self.ratings_movies.dist_by_rating()
 
-    def test_top_by_num_of_ratings(self, n):
+    def test_top_by_num_of_ratings(self, n=10):
         self.ratings_movies.top_by_num_of_ratings(n)
 
-    def test_top_by_ratings(self, n):
+    def test_top_by_ratings(self, n=10):
         self.ratings_movies.top_by_ratings(n)
 
-    def test_top_controversial(self, n):
+    def test_top_controversial(self, n=10):
         self.ratings_movies.top_controversial(n)
 
     def test_dist_by_ratings_number(self):
@@ -48,9 +46,8 @@ class TestRatings:
     def test_dist_by_ratings_values(self):
         self.ratings_users.dist_by_ratings_values()
 
-    def test_top_by_variance(self, n):
+    def test_top_by_variance(self, n=10):
         self.ratings_users.top_by_variance(n)
-
 
 class Tests:
     def setup_class(self):
@@ -95,44 +92,42 @@ class Tests:
                  set(map(type, result.keys())) == {str}) and
                 sorted(result, reverse=True, key=lambda x: x[1]) == list(result))
 
-
-def tags_n_linksTest():
-    testTags_n_Links = Tests()
-    testTags_n_Links.setup_class()
-
-    print(testTags_n_Links.test_tags_most_words())
-    print(testTags_n_Links.test_tags_longest())
-    print(testTags_n_Links.test_tags_most_words_and_longest())
-    print(testTags_n_Links.test_tags_most_popular())
-    print(testTags_n_Links.test_get_imdb())
-
-    testTags_n_Links.test_top_directors()
-
-
-def ratingsTest():
-    testRatings = TestRatings()
-    testRatings.setup_class()
-
-    # testRatings.test_movies_dist_by_years()
-    # testRatings.test_movies_dist_by_rating()
-    # testRatings.test_top_by_num_of_ratings(5)
-    # testRatings.test_top_by_ratings(5)
-    # testRatings.test_top_controversial(5)
-    # testRatings.test_dist_by_ratings_number()
-    # testRatings.test_dist_by_ratings_values()
-    # testRatings.test_top_by_variance(5)
+# def tags_n_linksTest():
+#     testTags_n_Links = Tests()
+#     testTags_n_Links.setup_class()
+#
+#     print(testTags_n_Links.test_tags_most_words())
+#     print(testTags_n_Links.test_tags_longest())
+#     print(testTags_n_Links.test_tags_most_words_and_longest())
+#     print(testTags_n_Links.test_tags_most_popular())
+#     print(testTags_n_Links.test_get_imdb())
+#
+#     testTags_n_Links.test_top_directors()
+#
+# def ratingsTest():
+#     testRatings = TestRatings()
+#     testRatings.setup_class()
+#
+#     testRatings.test_movies_dist_by_years()
+#     testRatings.test_movies_dist_by_rating()
+#     testRatings.test_top_by_num_of_ratings(5)
+#     testRatings.test_top_by_ratings(5)
+#     testRatings.test_top_controversial(5)
+#     testRatings.test_dist_by_ratings_number()
+#     testRatings.test_dist_by_ratings_values()
+#     testRatings.test_top_by_variance(5)
 
 
-def moviesTest():
-    testMovies = TestMovies()
-    testMovies.setup_class()
+# def moviesTest():
+#     testMovies = TestMovies()
+#     testMovies.setup_class()
+#
+#     testMovies.test_dist_by_release()
+#     testMovies.test_dist_by_genres()
+#     testMovies.test_most_genres(5)
 
-    # testMovies.test_dist_by_release()
-    # testMovies.test_dist_by_genres()
-    # testMovies.test_most_genres(5)
 
-
-if __name__ == '__main__':
-    moviesTest()
-    ratingsTest()
-    tags_n_linksTest()
+# if __name__ == '__main__':
+    # moviesTest()
+    # ratingsTest()
+    # tags_n_linksTest()
