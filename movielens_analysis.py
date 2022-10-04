@@ -3,6 +3,7 @@ from module.links import Links
 from module.movies import Movies
 from module.ratings import Ratings
 
+
 class TestMovies:
     @classmethod
     def setup_class(cls):
@@ -16,6 +17,7 @@ class TestMovies:
 
     def test_most_genres(self, n=10):
         self.movies.most_genres(n)
+
 
 class TestRatings:
     @classmethod
@@ -48,6 +50,7 @@ class TestRatings:
 
     def test_top_by_variance(self, n=10):
         self.ratings_users.top_by_variance(n)
+
 
 class Tests:
     def setup_class(self):
@@ -85,7 +88,9 @@ class Tests:
                 sorted(result, reverse=True, key=lambda x: x[0]) == list(result))
 
     def test_top_directors(self):
-        self.links.get_imdb(['1', '2', '3', '4', '5'], ['director', 'name', 'genre', 'actor'])
+        # self.links.get_imdb(['1', '2', '3', '4', '5'], ['director', 'name', 'genre', 'actor'])
+        self.links.get_imdb(['1', '2', '3', '4', '5'],
+                            ['Director', 'Also known as', 'Budget', 'Gross worldwide', 'Runtime'])
         result = self.links.top_directors(3)
         return (isinstance(result, dict) and
                 (set(map(type, result.values())) == {int} and
@@ -96,13 +101,14 @@ class Tests:
 #     testTags_n_Links = Tests()
 #     testTags_n_Links.setup_class()
 #
-#     print(testTags_n_Links.test_tags_most_words())
-#     print(testTags_n_Links.test_tags_longest())
-#     print(testTags_n_Links.test_tags_most_words_and_longest())
-#     print(testTags_n_Links.test_tags_most_popular())
-#     print(testTags_n_Links.test_get_imdb())
+#     print("Test of tags and links")
+#     print(f'Most_words {testTags_n_Links.test_tags_most_words()}')
+#     print(f'Longest tags {testTags_n_Links.test_tags_longest()}')
+#     print(f'most_words_and_longest {testTags_n_Links.test_tags_most_words_and_longest()}')
+#     print(f'most_popular {testTags_n_Links.test_tags_most_popular()}')
+#     print(f'test_get_imdb {testTags_n_Links.test_get_imdb()}')
 #
-#     testTags_n_Links.test_top_directors()
+#     print(f'top_directors {testTags_n_Links.test_top_directors()}')
 #
 # def ratingsTest():
 #     testRatings = TestRatings()
@@ -116,8 +122,8 @@ class Tests:
 #     testRatings.test_dist_by_ratings_number()
 #     testRatings.test_dist_by_ratings_values()
 #     testRatings.test_top_by_variance(5)
-
-
+#
+#
 # def moviesTest():
 #     testMovies = TestMovies()
 #     testMovies.setup_class()
@@ -125,9 +131,9 @@ class Tests:
 #     testMovies.test_dist_by_release()
 #     testMovies.test_dist_by_genres()
 #     testMovies.test_most_genres(5)
-
-
+#
+#
 # if __name__ == '__main__':
-    # moviesTest()
-    # ratingsTest()
-    # tags_n_linksTest()
+#     moviesTest()
+#     ratingsTest()
+#     tags_n_linksTest()

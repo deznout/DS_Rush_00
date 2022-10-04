@@ -24,7 +24,7 @@ class Links:
                         continue
                     mov = line.split(',')[0]
                     self.movie_imdb_ID[mov] = line.split(',')[1]
-            range_nm = list(map(str, range(1, 6)))
+            range_nm = list(map(str, range(5, 21)))
             self.data = self.get_imdb(range_nm,
                                       ['Director', 'Also known as', 'Budget', 'Gross worldwide', 'Runtime'])
         except OSError as os_err:
@@ -165,16 +165,14 @@ the values are the budgets divided by their runtime. The budgets can be in diffe
 
         return dict(costs)
 
-#
-# def print_hi(name):
-#     # Use a breakpoint in the code line below to debug your script.
-#     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-#
-#
+
 # # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
-#     print_hi('PyCharm')
-#     lll = Links() #('../data/links.csv')
-#     res = lll.most_profitable(35)
+#     lll = Links('../data/links.csv')
+#     res = lll.top_directors(35)
 #     for p, m in res.items():
-#         print(p, m)
+#         print(f'key = {p} {type(p)}', end='')
+#         print(f'val = {m} {type(m)}')
+#     print(type(res))
+#     print(f'sorted =  {type(sorted(res))}')
+
